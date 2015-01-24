@@ -10,11 +10,12 @@
 	$db = new mysqli("localhost", "root", "", "phplogin");
 	$result = $db->query("SELECT * FROM users WHERE username = 'malvee'");
 	$ans = $result->fetch_all(MYSQLI_ASSOC);
-	$dbArray = preg_split('/\s+/', $ans[0]["query"]);
+	$dbArray = preg_split('/\s+/', trim($ans[0]["query"]));
 	if (isset($_POST["text"]))
 	{
 		
-		$sentTextArray = preg_split('/\s+/', $_POST["text"]);
+		$sentTextArray = preg_split('/\s+/', trim($_POST["text"]));
+		
 		// given two string array $dbArray and $sentTextArray the code below merges the two into $dbArray
 		foreach ($sentTextArray as $x)
 		{
@@ -37,6 +38,7 @@
 		{
 			$string .= (" ".$x);
 		}
+		echo $string;
 		$db -> query("UPDATE users SET query= '$string'  WHERE username='malvee'");
 		$string = "";
 		echo "<form action = \"test.php\" method = \"POST\">"; 
